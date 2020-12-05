@@ -1,0 +1,29 @@
+//Find the smallest and largest element from the given dataset
+/*Input:
+10
+2 7 9 3 1 7 4 2 7 5 
+Output:
+The maximum element is 9 and the minimum element is 1 */
+
+#include<stdio.h>
+
+int main()
+{
+	int n;
+	printf("Enter the size of an array: ");
+	scanf("%d", &n);
+	
+	int a[n], i;
+	printf("Enter the elements: ");
+	for(i = 0; i < n; i++) scanf("%d", &a[i]);
+	
+	int max = a[0], min = a[0];
+	
+	for(i = 1; i < n; i++)
+	{
+		if(max < a[i]) max = a[i];
+		if(min > a[i]) min = a[i];
+	}
+	
+	printf("The maximum element is %d and the minimum element is %d\n", max, min);
+}
