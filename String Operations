@@ -1,0 +1,201 @@
+/*Enter the choice: (1-8)
+1 for substring
+2 for indexing
+3 for length
+4 for insert
+5 for delete
+6 for replace
+7 for concatenate
+8 for exit*/
+
+#include<stdio.h>
+
+int length(char s[])
+{
+    int cnt = 0;
+    for(int i = 0; s[i] != '\0'; i++) cnt++;
+    return cnt;
+}
+
+char substring(char s[], int position, int l)
+{
+    int i;
+    printf("The substring is: ");
+    for(i = position; i < position + l; i++) printf("%c", s[i]);
+    printf("\n");
+}
+
+char insert(char text[], int index, char s[])
+{
+    int i, j;
+    for(i = 0; i < index; i++) printf("%c", s[i]);
+    printf("%s", text);
+    for(i = index; i < length(s); i++) printf("%c", s[i]);
+    printf("\n");
+}
+
+int index(char s[], char substr[])
+{
+
+    int i, j, flag = 0;
+    for (i = 0; i <= length(s) - length(substr); i++) {
+        for (j = 0; j < length(substr); j++)
+            if (s[i + j] != substr[j])
+                break;
+
+        if (j == length(substr))
+        {
+            flag = 1;
+            //printf("Present at %d no. index\n", i);
+            return i;
+        }
+    }
+    if(flag != 1)
+    {
+        //printf("Not present.\n");
+        return -1;
+    }
+}
+
+char delete_pattern(char s[], int position, int l)
+{
+    int i, j;
+
+    for(i = 0; i < position; i++) printf("%c", s[i]);
+    for(i = position + l; i < length(s); i++) printf("%c", s[i]);
+    printf("\n");
+}
+
+void replace_pattern(char str[])
+{
+    char s1[1000], s2[1000];
+    int idx, i, j;
+    printf("Enter the pattern 1: ");
+    getchar();
+    gets(s1);
+    printf("Enter the pattern 2: ");
+    //getchar();
+    gets(s2);
+    char new_str[length(str) - length(s1) + length(s2)];
+    int k = index(str, s1); // index of s1[0]
+    if(k != -1)
+    {
+        for(i = 0; i < k; i++) new_str[i] = str[i];
+        for(j = 0; j < length(s2); i++, j++) new_str[i] = s2[j];
+        for(j = k + length(s1); j < length(str); i++, j++) new_str[i] = str[j];
+
+        //puts(new_str);
+        //for(i = 0; i < strlen(new_str); i++) printf("%c", new_str[i]);
+
+        printf("%s\n", new_str);
+    }
+}
+
+
+char concate(char str[], char str2[])
+{
+    int i, j;
+    char new_str[length(str) + length(str2)];
+    printf("After concatenating, the new string is: ");
+    for(i = 0; i < length(str); i++) new_str[i] = str[i];
+    for(j = 0; j < length(str2); i++, j++) new_str[i] = str2[j];
+    new_str[i] = '\0';
+    //puts(new_str);
+    puts(new_str);
+}
+
+int main()
+{
+
+    char s[10000];
+    printf("Enter the main string: ");
+    gets(s);
+
+	printf("Enter the choice: (1-8)\n1 for substring\n2 for indexing\n3 for length\n4 for insert\n5 for delete\n6 for replace\n7 for concatenate\n8 for exit\n");
+	while(1)
+	{
+		int choice;
+		printf("Enter the choice: ");
+		scanf("%d", &choice);
+		if(choice == 1)
+		{
+			printf("Substring operation:\n");
+		    int position, len;
+		    printf("Enter the position: ");
+		    scanf("%d", &position);
+		    printf("Enter the length: ");
+		    scanf("%d", &len);
+		    substring(s, position, len);
+		}
+	
+	    if(choice == 2)
+	    {
+	    	printf("Indexing:\n");
+		    char substr[10000];
+		    printf("Enter the substring: ");
+		    getchar();
+		    gets(substr);
+		    if(index(s, substr) != -1) printf("Present at %d no. index\n", index(s, substr));
+		    else printf("Not present.\n");
+		}
+	
+	   if(choice == 3)
+	   {
+	   	 printf("Find the length:\n");
+	   	 printf("The length of the main string is %d\n", length(s));
+	   }
+	
+	
+	   if(choice == 4)
+	   {
+		   	printf("Insert:\n");
+		    char text[10000];
+		    printf("Enter the text you want to insert: ");
+		    getchar();
+			gets(text);
+		    int pos;
+		    printf("Enter the position where you want to insert: ");
+		    scanf("%d", &pos);
+		    printf("After inserting the text, the new string is: ");
+		    insert(text, pos, s);
+		}
+	
+	
+	   if(choice == 5)
+	   {
+	   	    printf("Deleting operation:\n");
+		    int index;
+		    printf("Enter the position from where you want to delete: ");
+		    scanf("%d", &index);
+		    int l;
+		    printf("Enter the length of deleted text: ");
+		    scanf("%d", &l);
+		    printf("After deleting, the new string is: ");
+		    delete_pattern(s, index, l);
+	   }
+	
+	    if(choice == 6)
+	    {
+	    	printf("Replacement of patterns:\n");
+	   		replace_pattern(s);
+		}
+	
+	    if(choice == 7)
+	    {
+	    	printf("Concatenation of two strings:\n");
+		    char str2[10000];
+		    printf("Enter the text you want to concatenate with the main string: ");
+		    getchar();
+			gets(str2);
+		    concate(s, str2);
+		}
+	
+	    if(choice == 8) 
+	    {
+	    	printf("\nEnd of string operation.\n");
+	    	return 0;
+		}
+	
+	}
+
+}
